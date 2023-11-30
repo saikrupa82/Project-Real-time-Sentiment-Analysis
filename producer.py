@@ -22,7 +22,7 @@ def process_tweets(csv_file):
     with open(csv_file, mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
-            tweet_text = row['tweet_text']  # Change 'tweet_text' to the name of your column
+            tweet_text = row['airline_sentiment']  # Change 'tweet_text' to the name of your column
             send_to_kafka(tweet_text)
             logging.info(f"Sent tweet: {tweet_text}")
 

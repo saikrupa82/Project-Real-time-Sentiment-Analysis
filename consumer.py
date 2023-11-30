@@ -5,12 +5,11 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, udf
 from pyspark.sql.types import StructType, StructField, StringType, ArrayType
 
-
 if __name__ == "__main__":
     findspark.init()
 
     # Path to the pre-trained model
-    path_to_model = r''
+    path_to_model = './pre_trained_model'
 
     # Config
     spark = SparkSession \
@@ -27,7 +26,7 @@ if __name__ == "__main__":
     # Schema for the incoming data
     schema = StructType([StructField("message", StringType())])
 
-    # Read the data from kafka
+    # Read the data from Kafka
     df = spark \
         .readStream \
         .format("kafka") \
@@ -38,8 +37,7 @@ if __name__ == "__main__":
         .load() \
         .selectExpr("CAST(value AS STRING) as message")
 
-    df = df \
-        .withColumn("value", from_json("message", schema))
+    df = df.withColumn("value", from_json("message", schema))
 
     # Pre-processing the data
     pre_process = udf(
@@ -48,16 +46,32 @@ if __name__ == "__main__":
     df = df.withColumn("cleaned_data", pre_process(df.message)).dropna()
 
     # Load the pre-trained model
-    pipeline_model = PipelineModel.load(path_to_model)
+    try:
+        pipeline_model = PipelineModel.load(path_to_model)
+    except Exception as e:
+        print(f"Error loading the model: {e}")
+        spark.stop()
+        exit(1)
+
     # Make predictions
     prediction = pipeline_model.transform(df)
+
     # Select the columns of interest
     prediction = prediction.select(prediction.message, prediction.prediction)
 
-    # Print prediction in console
-    prediction \
+    # Print prediction in the console
+    query = prediction \
         .writeStream \
         .format("console") \
         .outputMode("update") \
-        .start() \
-        .awaitTermination()
+        .start()
+
+    # Await termination of the streaming query
+    try:
+        query.awaitTermination()
+    except KeyboardInterrupt:
+        print("Termination signal received. Stopping the streaming query.")
+        query.stop()
+    finally:
+        # Stop the Spark session gracefully
+        spark.stop()
