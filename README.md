@@ -1,15 +1,15 @@
 ﻿# Project-Real-time-Sentiment-Analysis
 
 
-- docker-compose -f zk-single-kafka-single.yml up -d
+- docker-compose up --build -d
 - docker-compose -f zk-single-kafka-single.yml ps
 - docker exec -it kafka1 /bin/bash
 - kafka-topics --version
 - kafka-topics --create --topic twitter --bootstrap-server localhost:9092
 - kafka-topics --describe --topic twitter --bootstrap-server localhost:9092
 - sudo apt update
-- sudo apt install python3-pip
-- pip install kafka-python
+- sudo apt install python3-pip -Y
+- pip install -r requirements.txt
 - python3 producer.py
+- In another tab run python3 con.py
 - 
-- ./bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 ../../.././home/Spark.py
