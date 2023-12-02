@@ -2,7 +2,7 @@
 
 
 - docker-compose up --build -d
-- docker-compose -f zk-single-kafka-single.yml ps
+- docker-compose ps
 - docker exec -it kafka1 /bin/bash
 - kafka-topics --version
 - kafka-topics --create --topic twitter --bootstrap-server localhost:9092
