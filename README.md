@@ -3,10 +3,6 @@
 
 - docker-compose up --build -d
 - docker-compose ps
-- docker exec -it kafka1 /bin/bash
-- kafka-topics --version
-- kafka-topics --create --topic twitter --bootstrap-server localhost:9092
-- kafka-topics --describe --topic twitter --bootstrap-server localhost:9092
 - sudo apt update
 - sudo apt install python3-pip -Y
 - pip install -r requirements.txt
