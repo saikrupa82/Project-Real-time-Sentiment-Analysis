@@ -14,6 +14,51 @@ Before you begin, ensure that you have the following prerequisites in place:
 - Understanding of Docker Compose
 - Familiarity with Kafka, Spark, MongoDB, and Django
 
+# Real-Time Sentiment Analysis Architecture
+
+## Overview
+
+This architecture enables real-time sentiment analysis by collecting, processing, and visualizing data from social media platforms like Twitter.
+
+## Components
+
+### 1. Docker Containers
+
+Docker containers provide isolation for Kafka, Spark, Python scripts, and MongoDB components, ensuring easy deployment and scalability.
+
+### 2. Kafka
+
+Kafka acts as a central message broker, ingesting data from various sources and reliably streaming it downstream.
+
+### 3. Twitter Data Collector
+
+A Python script collects real-time Twitter data, including tweets, usernames, and metadata, and sends it to Kafka.
+
+### 4. Spark Processing
+
+Apache Spark consumes data from Kafka, performs sentiment analysis using libraries like TextBlob, and extracts competitor mentions.
+
+### 5. MongoDB
+
+MongoDB stores processed sentiment data. Python scripts consume Kafka data, process it, and store it in MongoDB.
+
+### 6. Django Web Application
+
+A Django web app connects to MongoDB, retrieves sentiment data, and presents real-time insights through interactive visualizations.
+
+## Data Flow
+
+1. Twitter data is continuously collected and ingested into Kafka.
+2. Spark processes data, performs sentiment analysis, and extracts competitor mentions.
+3. Processed data is sent to another Kafka topic.
+4. Python scripts consume, process, and store data in MongoDB.
+5. Django web app connects to MongoDB and displays real-time sentiment insights.
+
+## Conclusion
+
+This architecture offers a comprehensive solution for real-time sentiment analysis, utilizing Docker, Kafka, Spark, MongoDB, and Django to create a scalable and powerful system for monitoring social media sentiment trends.
+
+
 ## Step-by-Step Guide
 
 - **docker-compose up --build -d**: This command initiates Docker Compose to build and start the defined containers in detached mode. It launches the various components required for the project, such as Kafka, Spark, and MongoDB, in separate containers.
