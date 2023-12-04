@@ -1,3 +1,21 @@
+# Setting Up a Real-Time Sentiment Analysis Project
+
+## Overview
+
+This document provides a step-by-step guide on how to set up and run a real-time sentiment analysis project. The project involves using Docker, Kafka, Python, Spark, MongoDB, and Django to collect, process, and visualize sentiment data in real-time. Follow these instructions to create a fully functional real-time sentiment analysis pipeline.
+
+## Prerequisites
+
+Before you begin, ensure that you have the following prerequisites in place:
+
+- Docker installed and configured
+- Python 3 and pip installed
+- Access to the required libraries and packages (specified in `requirements.txt`)
+- Understanding of Docker Compose
+- Familiarity with Kafka, Spark, MongoDB, and Django
+
+## Step-by-Step Guide
+
 - **docker-compose up --build -d**: This command initiates Docker Compose to build and start the defined containers in detached mode. It launches the various components required for the project, such as Kafka, Spark, and MongoDB, in separate containers.
 
 - **docker-compose ps**: After the containers are running, this command displays the status and information of all containers managed by Docker Compose. It allows you to verify that the containers are up and running.
