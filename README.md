@@ -1,6 +1,6 @@
 # Setting Up a Real-Time Sentiment Analysis Project
 
-## Overview
+## Overview of Project
 
 This document provides a step-by-step guide on how to set up and run a real-time sentiment analysis project. The project involves using Docker, Kafka, Python, Spark, MongoDB, and Django to collect, process, and visualize sentiment data in real-time. Follow these instructions to create a fully functional real-time sentiment analysis pipeline.
 
@@ -16,7 +16,7 @@ Before you begin, ensure that you have the following prerequisites in place:
 
 # Real-Time Sentiment Analysis Architecture
 
-## Overview
+## Overview of Architecture
 
 This architecture enables real-time sentiment analysis by collecting, processing, and visualizing data from social media platforms like Twitter.
 
