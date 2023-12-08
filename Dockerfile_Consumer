@@ -1,0 +1,10 @@
+# Dockerfile_Consumer
+FROM python:3.9-slim
+
+WORKDIR C:\Users\Owner\Documents\SENG 691\project
+
+COPY . .
+
+RUN pip install --no-cache-dir confluent-kafka textblob
+
+CMD ["python", "./kafka_consumer_producer.py"]
