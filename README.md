@@ -64,7 +64,7 @@ Follow these steps to set up and run the real-time sentiment analysis project:
 This architecture provides a comprehensive solution for real-time sentiment analysis, enabling businesses to monitor and analyze customer sentiment on social media platforms effectively.
 
 ## Project Output
-Please add the output image or screenshots of the project's real-time sentiment analysis dashboard here:
+The output image or screenshots of the project's real-time sentiment analysis dashboard here:
 
 ![Real-Time Sentiment Analysis Dashboard](dashboard.png)
 
