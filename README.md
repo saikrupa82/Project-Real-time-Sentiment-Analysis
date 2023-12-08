@@ -1,83 +1,71 @@
-# Setting Up a Real-Time Sentiment Analysis Project
+# Real-Time Sentiment Analysis Project Architecture
 
-## Overview of Project
+## Overview
+This document presents the architecture and steps for setting up a real-time sentiment analysis project. The project aims to collect, process, and visualize sentiment data from social media platforms, with a focus on Twitter. It utilizes a combination of Docker, Kafka, Python, Spark, MongoDB, and Django to create a scalable and powerful system for monitoring customer sentiment trends in real-time.
 
-This document provides a step-by-step guide on how to set up and run a real-time sentiment analysis project. The project involves using Docker, Kafka, Python, Spark, MongoDB, and Django to collect, process, and visualize sentiment data in real-time. Follow these instructions to create a fully functional real-time sentiment analysis pipeline.
+![Real-Time Sentiment Analysis Architecture](architecture.png)
 
-## Prerequisites
+## Components
 
-Before you begin, ensure that you have the following prerequisites in place:
+### 1. Docker Containers
+Docker containers provide isolation for various project components, allowing for easy deployment and scalability. They encapsulate Kafka, Spark, Python scripts, and MongoDB, ensuring efficient resource management.
 
-- Docker installed and configured
-- Python 3 and pip installed
-- Access to the required libraries and packages (specified in `requirements.txt`)
-- Understanding of Docker Compose
-- Familiarity with Kafka, Spark, MongoDB, and Django
+### 2. Kafka
+Kafka acts as a central message broker in the architecture, ingesting data from various sources and streaming it downstream. It provides reliable data transport and real-time processing capabilities.
 
-## Real-Time Sentiment Analysis Architecture
+### 3. Twitter Data Collector
+A Python script serves as the Twitter data collector. It continuously gathers real-time Twitter data, including tweets, usernames, and metadata, and sends this data to Kafka for further processing.
 
-### Overview of Architecture
+### 4. Spark Processing
+Apache Spark plays a crucial role in the architecture, consuming data from Kafka. It performs sentiment analysis using libraries like TextBlob, allowing for the classification of tweets into positive, negative, or neutral sentiments. Additionally, Spark extracts mentions of competitors from the tweets.
 
-This architecture enables real-time sentiment analysis by collecting, processing, and visualizing data from social media platforms like Twitter.
+### 5. MongoDB
+MongoDB serves as the database for storing processed sentiment data. Python scripts consume data from Kafka, process it further if needed, and store it in MongoDB for easy retrieval and analysis.
 
-### Components
+### 6. Django Web Application
+A Django web application provides the user interface for real-time sentiment analysis insights. This component connects to MongoDB, retrieves sentiment data, and presents it through interactive visualizations, enabling users to monitor customer sentiment trends effectively.
 
-#### 1. Docker Containers
+## Data Flow
 
-Docker containers provide isolation for Kafka, Spark, Python scripts, and MongoDB components, ensuring easy deployment and scalability.
+The architecture's data flow ensures the seamless processing of real-time sentiment data:
 
-#### 2. Kafka
+1. Twitter data is continuously collected and ingested into Kafka, where it is made available for processing.
+2. Apache Spark processes the incoming data, performing sentiment analysis and competitor mention extraction.
+3. Processed data is sent to another Kafka topic for further consumption and analysis.
+4. Python scripts consume, process, and store data in MongoDB, making it accessible for query and analysis.
+5. The Django web application connects to MongoDB and displays real-time sentiment insights, allowing users to interact with the data and gain valuable insights.
 
-Kafka acts as a central message broker, ingesting data from various sources and reliably streaming it downstream.
+## Steps to Set Up the Project
 
-#### 3. Twitter Data Collector
+Follow these steps to set up and run the real-time sentiment analysis project:
 
-A Python script collects real-time Twitter data, including tweets, usernames, and metadata, and sends it to Kafka.
+1. Initiate Docker Compose and start the defined containers using the command `docker-compose up --build -d`.
 
-#### 4. Spark Processing
+2. Verify the status and information of the containers with the command `docker-compose ps`.
 
-Apache Spark consumes data from Kafka, performs sentiment analysis using libraries like TextBlob, and extracts competitor mentions.
+3. Update Ubuntu packages to ensure you have the latest information about available packages: `sudo apt update`.
 
-#### 5. MongoDB
+4. Install Python 3 and pip, which are essential for managing Python package dependencies: `sudo apt install python3-pip -y`.
 
-MongoDB stores processed sentiment data. Python scripts consume Kafka data, process it, and store it in MongoDB.
+5. Install project dependencies by running `pip install -r requirements.txt`.
 
-#### 6. Django Web Application
+6. Execute the Twitter data collection script with `python3 producer_TwitterData.py`. This script collects real-time Twitter data and sends it to Kafka.
 
-A Django web app connects to MongoDB, retrieves sentiment data, and presents real-time insights through interactive visualizations.
+7. Run the Kafka consumer/producer script with `python3 kafka_consumer_producer.py`. This script consumes data from Kafka, performs additional processing, and sends the results to another Kafka topic.
 
-### Data Flow
+8. Consume Kafka data, process it, and store it in MongoDB by running `python3 kafka_consumer_MangoDB`. This step may involve batch processing of data.
 
-1. Twitter data is continuously collected and ingested into Kafka.
-2. Spark processes data, performs sentiment analysis, and extracts competitor mentions.
-3. Processed data is sent to another Kafka topic.
-4. Python scripts consume, process, and store data in MongoDB.
-5. Django web app connects to MongoDB and displays real-time sentiment insights.
+9. Verify that the data has been successfully appended to MongoDB by querying the database.
 
-## Step-by-Step Guide
+10. Create a Django web application for front-end visualization by navigating to the `Twitter_Django` folder and running the application with `python3 manage.py runserver`.
 
-1. **docker-compose up --build -d**: This command initiates Docker Compose to build and start the defined containers in detached mode. It launches the various components required for the project, such as Kafka, Spark, and MongoDB, in separate containers.
+11. Ensure that all components are running correctly, and access the Django web application to view and interact with real-time sentiment insights.
 
-2. **docker-compose ps**: After the containers are running, this command displays the status and information of all containers managed by Docker Compose. It allows you to verify that the containers are up and running.
+This architecture provides a comprehensive solution for real-time sentiment analysis, enabling businesses to monitor and analyze customer sentiment on social media platforms effectively.
 
-3. **sudo apt update**: This command updates the package list on your Ubuntu system, ensuring that you have the latest information about available packages.
+## Project Output
+Please add the output image or screenshots of the project's real-time sentiment analysis dashboard here:
 
-4. **sudo apt install python3-pip -y**: It installs the Python 3 package manager (pip) on your system. Pip is used to manage Python package dependencies.
+![Real-Time Sentiment Analysis Dashboard](dashboard.png)
 
-5. **pip install -r requirements.txt**: This command installs the Python packages listed in the requirements.txt file. These packages typically include libraries and modules required for the project, such as Kafka libraries, Spark dependencies, and more.
-
-6. **python3 producer_TwitterData.py**: You run the Python script producer_TwitterData.py. This script likely collects Twitter data and sends it to a Kafka topic, acting as a Kafka producer.
-
-7. **python3 kafka_consumer_producer.py**: This script functions as a Kafka consumer that consumes data from the Kafka topic (where it was produced by the previous step) and performs additional processing, possibly using Spark. It then sends the processed data back to another Kafka topic, acting as both a Kafka consumer and producer.
-
-8. **python3 kafka_consumer_MangoDB**: In this step, Kafka data is consumed by another script, and the data is further processed. This processed data is then sent to a MongoDB database. This step might involve batch processing of the data.
-
-9. Check whether data in MongoDB is appended: After the data is sent to MongoDB, you should check whether the data has been successfully appended to the MongoDB database. You can query the database to ensure the data is there.
-
-10. Creating the Django for front-end visualization by using the data from MongoDB: This step involves creating a Django web application for front-end visualization. The Django application connects to the MongoDB database, retrieves the data, and uses it to generate visualizations or present it on a web interface for users to interact with.
-
-11. Check whether everything is correct: Verify that all components are running correctly, and the Django web application is serving real-time sentiment insights.
-
-12. Change the folder to Twitter_Django and run the command `python3 manage.py runserver` or `python manage.py runserver` depending on your Python setup.
-
-This architecture offers a comprehensive solution for real-time sentiment analysis, utilizing Docker, Kafka, Spark, MongoDB, and Django to create a scalable and powerful system for monitoring social media sentiment trends.
+In the image above, you can see the real-time sentiment analysis dashboard generated by the Django web application. It provides interactive visualizations and insights into customer sentiment trends on social media platforms, allowing businesses to make data-driven decisions and monitor their online reputation.
