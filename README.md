@@ -35,33 +35,80 @@ The architecture's data flow ensures the seamless processing of real-time sentim
 4. Python scripts consume, process, and store data in MongoDB, making it accessible for query and analysis.
 5. The Django web application connects to MongoDB and displays real-time sentiment insights, allowing users to interact with the data and gain valuable insights.
 
-## Steps to Set Up the Project
+
+# Real-Time Sentiment Analysis Project Setup
 
 Follow these steps to set up and run the real-time sentiment analysis project:
 
-1. Initiate Docker Compose and start the defined containers using the command `docker-compose up --build -d`.
+## Step 1: Initiate Docker Compose
 
-2. Verify the status and information of the containers with the command `docker-compose ps`.
+Initiate Docker Compose and start the defined containers using the following command:
+```shell
+docker-compose up --build -d
+```
 
-3. Update Ubuntu packages to ensure you have the latest information about available packages: `sudo apt update`.
+## Step 2: Verify Container Status
 
-4. Install Python 3 and pip, which are essential for managing Python package dependencies: `sudo apt install python3-pip -y`.
+Verify the status and information of the containers using the following command:
+```shell
+docker-compose ps
+```
 
-5. Install project dependencies by running `pip install -r requirements.txt`.
+## Step 3: Update Ubuntu Packages
 
-6. Execute the Twitter data collection script with `python3 producer_TwitterData.py`. This script collects real-time Twitter data and sends it to Kafka.
+Update Ubuntu packages to ensure you have the latest information about available packages:
+```shell
+sudo apt update
+```
 
-7. Run the Kafka consumer/producer script with `python3 kafka_consumer_producer.py`. This script consumes data from Kafka, performs additional processing, and sends the results to another Kafka topic.
+## Step 4: Install Python and Pip
 
-8. Consume Kafka data, process it, and store it in MongoDB by running `python3 kafka_consumer_MangoDB`. This step may involve batch processing of data.
+Install Python 3 and pip, which are essential for managing Python package dependencies:
+```shell
+sudo apt install python3-pip -y
+```
 
-9. Verify that the data has been successfully appended to MongoDB by querying the database.
+## Step 5: Install Project Dependencies
 
-10. Create a Django web application for front-end visualization by navigating to the `Twitter_Django` folder and running the application with `python3 manage.py runserver`.
+Install project dependencies by running the following command:
+```shell
+pip install -r requirements.txt
+```
 
-11. Ensure that all components are running correctly, and access the Django web application to view and interact with real-time sentiment insights.
+## Step 6 (Parallel): Twitter Data Collection and Kafka Consumer/Producer
 
-This architecture provides a comprehensive solution for real-time sentiment analysis, enabling businesses to monitor and analyze customer sentiment on social media platforms effectively.
+Execute the Twitter data collection script with the following command to collect real-time Twitter data and send it to Kafka:
+```shell
+python3 producer_TwitterData.py
+```
+
+At the same time, run the Kafka consumer/producer script with the following command to consume data from Kafka, perform additional processing, and send the results to another Kafka topic:
+```shell
+python3 kafka_consumer_producer.py
+```
+
+## Step 7 (Parallel): Kafka Data Processing and MongoDB
+
+Consume Kafka data, process it, and store it in MongoDB by running the following command. This step may involve batch processing of data:
+```shell
+python3 kafka_consumer_MangoDB.py
+```
+
+## Step 8: Verify MongoDB Data
+
+Verify that the data has been successfully appended to MongoDB by querying the database.
+
+## Step 9: Django Web Application
+
+Create a Django web application for front-end visualization by navigating to the Twitter_Django folder and running the application with the following command:
+```shell
+python3 manage.py runserver
+```
+
+Ensure that all components are running correctly, and access the Django web application to view and interact with real-time sentiment insights.
+```
+
+Now, Steps 6 and 7 are indicated as parallel steps, meaning you can execute them concurrently to optimize the setup process.
 
 ## Project Output
 The output image or screenshots of the project's real-time sentiment analysis dashboard here:
